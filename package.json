@@ -1,0 +1,12 @@
+{
+  "name": "dataVisualMointor",
+  "version": "0.0.0",
+  "desciption": "showing SQL data in real time",
+  "author": "Chongchong Wang <ccwang.sv@gmail.com> (http://chongchongwang.me/)",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "path": "^0.12.7"
+  }
+}
