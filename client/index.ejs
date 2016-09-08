@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Data Monitor</title>
+    <script type="text/javascript" src='./js/jquery.min.js'>  </script>
+    <script type="text/javascript" src='./js/highcharts.js'>  </script>
+    <script type="text/javascript" src='./js/exporting.js'>  </script>
+    <script type="text/javascript" src='./js/main.js'>  </script>
   </head>
   <body>
     <h1>My name is data</h1>
-    <% for (var x in users){ %>
-      <h3> First Name: <%= users[x].first_name %></h3>
-      <h4> Last Name: <%= users[x].last_name %></h4>
-      <hr>
-    <% } %>
+    <div id='container' style="min-width:350px;height:400px;margin:0 auto">
+
+    </div>
   </body>
 </html>

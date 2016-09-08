@@ -39,6 +39,7 @@ app.get('/users',function(req,res){
 
 });
 
+// creating fake data
 // setInterval(createData,1000);
  function createData (){
   var timeNow = new Date();
