@@ -1,7 +1,28 @@
 $(document).ready(function(){
+  // start highcharts
   $('#container').highcharts({
     chart:{
-      type:'area'
+      type:'area',
+      // events:{
+        load:function(){
+          var i=11
+          $.post('/sqltime',function(data){
+          var charts = $('#container').highcharts();
+            var d=charts.series[0];
+            var h=charts.series[1];
+            var m=charts.series[2];
+            var s=charts.series[3];
+
+            setInterval(function(){
+              d.addPoint(data[i]['date']);
+              h.addPoint(data[i]['hour']);
+              m.addPoint(data[i]['min']);
+              s.addPoint(data[i]['sec']);
+              i+=1;
+            },1000);
+          });
+        }
+      }
     },
     title:{
       text:'time stack'
@@ -61,5 +82,35 @@ $(document).ready(function(){
     		}
     	}
     }
-  })
+  });
+  // end of highcharts
+
+  // get data from SQL
+  $.post('/sqltime',function(data){
+    var dates={
+      "date":[],
+      "hours":[],
+      "mins":[],
+      "secs":[]
+    };
+    for(var i=1;i<11;i++){
+      dates['date'].push(data[i]['date']);
+      dates['hours'].push(data[i]['hour']);
+      dates['mins'].push(data[i]['min']);
+      dates['secs'].push(data[i]['sec']);
+    }
+    var chart = $('#container').highcharts();
+    chart.series[0].update({
+		 		data:dates['date']
+		 });
+     chart.series[1].update({
+        data:dates['hours']
+     });
+     chart.series[2].update({
+        data:dates['mins']
+     });
+     chart.series[3].update({
+        data:dates['secs']
+     });
+  });
 })

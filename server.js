@@ -38,6 +38,12 @@ app.get('/users',function(req,res){
   })
 
 });
+app.post('/sqltime',function(req,res){
+  connection.query('select * from time',function(err,rows){
+    // console.log(rows)
+    res.send(rows);
+  })
+})
 
 // creating fake data
 // setInterval(createData,1000);
