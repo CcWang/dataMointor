@@ -2,24 +2,29 @@ $(document).ready(function(){
   // start highcharts
   $('#container').highcharts({
     chart:{
-      type:'area',
-      // events:{
+      type:'line',
+      animation: Highcharts.svg,
+      events:{
         load:function(){
-          var i=11
+          // var i=11
           $.post('/sqltime',function(data){
           var charts = $('#container').highcharts();
             var d=charts.series[0];
             var h=charts.series[1];
             var m=charts.series[2];
             var s=charts.series[3];
+            var y=Math.random();
+            for(var i=11;i<data.length;i++){
+              console.log(data[i]['date'])
+              setInterval(function(){
+                // console.log(data[i])
+                // d.addPoint([data[i]['date']],true,true);
+                // h.addPoint([data[i]['hour']],true,true);
+                // m.addPoint([data[i]['min']],true,true);
+                // s.addPoint([data[i]['sec']],true,true);
 
-            setInterval(function(){
-              d.addPoint(data[i]['date']);
-              h.addPoint(data[i]['hour']);
-              m.addPoint(data[i]['min']);
-              s.addPoint(data[i]['sec']);
-              i+=1;
-            },1000);
+              },1000);
+            }
           });
         }
       }
