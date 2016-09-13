@@ -21,8 +21,8 @@ app.set('view engine', 'ejs');
 app.get('/',function(req,res){
   res.render('index')
 });
-app.listen(8000,function(){
-  console.log('listening on port 8000')
+app.listen(8000, function(){
+  console.log('your are listening on port 8000');
 });
 connection.connect(function(err){
   if(err){
