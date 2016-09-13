@@ -2,29 +2,20 @@ $(document).ready(function(){
   // start highcharts
   $('#container').highcharts({
     chart:{
-      type:'line',
-      animation: Highcharts.svg,
+      type:'area',
       events:{
         load:function(){
           // var i=11
           $.post('/sqltime',function(data){
           var charts = $('#container').highcharts();
-            var d=charts.series[0];
-            var h=charts.series[1];
-            var m=charts.series[2];
-            var s=charts.series[3];
-            var y=Math.random();
-            for(var i=11;i<data.length;i++){
-              console.log(data[i]['date'])
-              setInterval(function(){
-                // console.log(data[i])
-                // d.addPoint([data[i]['date']],true,true);
-                // h.addPoint([data[i]['hour']],true,true);
-                // m.addPoint([data[i]['min']],true,true);
-                // s.addPoint([data[i]['sec']],true,true);
-
-              },1000);
-            }
+            var s1=charts.series[0];
+            var s2=charts.series[1];
+            var i=11;
+            setInterval(function(){
+              s1.addPoint([i,data[i]['mins']],true,true,true);
+              s2.addPoint([i,data[i]['hour']],true,true,true);
+              i+=1;
+            },1000);
           });
         }
       }
@@ -33,23 +24,18 @@ $(document).ready(function(){
       text:'time stack'
     },
     xAxis:{
-      categories:(function(){
-        var data=[];
-        for(var i=1;i<62;i+=9){
-          data.push(i);
-        };
-        return data;
-      }()),
+      // categories:(function(){
+      //   var data=[];
+      //   for(var i=1;i<62;i+=9){
+      //     data.push(i);
+      //   };
+      //   return data;
+      // }()),
       tickmarkPlacement:'on'
     },
     yAxis:{
       title:{
         text:'Numbers'
-      },
-      labels:{
-        formatter:function(){
-          return this.value
-        }
       }
     },
     plotOptions:{
@@ -58,17 +44,11 @@ $(document).ready(function(){
       }
     },
     series: [{
-            name: 'date',
-            data: [8,8,8,8,8,8,8]
+            name: 'date/sec',
+            data: [[8,01],[9,24],[10,16]]
         }, {
-            name: 'hours',
-            data: [10,11,12,13,14,15,16]
-        }, {
-            name: 'min',
-            data: [24,27,8,19,34,35,54]
-        }, {
-            name: 'sec',
-            data: [01,24,16,58,38,40,50]
+            name: 'hours/min',
+            data: [[8,24],[9,27],[10,8]]
         }],
 
     credits:{
@@ -105,17 +85,17 @@ $(document).ready(function(){
       dates['secs'].push(data[i]['sec']);
     }
     var chart = $('#container').highcharts();
-    chart.series[0].update({
-		 		data:dates['date']
-		 });
-     chart.series[1].update({
-        data:dates['hours']
-     });
-     chart.series[2].update({
-        data:dates['mins']
-     });
-     chart.series[3].update({
-        data:dates['secs']
-     });
+    // chart.series[0].update({
+		//  		data:dates['date']
+		//  });
+    //  chart.series[1].update({
+    //     data:dates['hours']
+    //  });
+    //  chart.series[2].update({
+    //     data:dates['mins']
+    //  });
+    //  chart.series[3].update({
+    //     data:dates['secs']
+    //  });
   });
 })
