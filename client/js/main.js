@@ -5,18 +5,20 @@ $(document).ready(function(){
       type:'area',
       events:{
         load:function(){
-          // var i=11
-          $.post('/sqltime',function(data){
-          var charts = $('#container').highcharts();
-            var s1=charts.series[0];
-            var s2=charts.series[1];
-            var i=11;
-            setInterval(function(){
-              s1.addPoint([i,data[i]['mins']],true,true,true);
-              s2.addPoint([i,data[i]['hour']],true,true,true);
-              i+=1;
-            },1000);
-          });
+          var chart=this;
+          var s1=this.series[0];
+          var s2=this.series[1];
+          var s3=this.series[2];
+          var x=125
+          console.log(s1,s2,s3);
+          setInterval(function(){
+            var y1=Math.random()*98+Math.random()*50;
+            s1.addPoint([x,y1],false,true);
+            s2.addPoint([x,y1],false,true);
+            s3.addPoint([x,y1],false,true);
+            chart.redraw();
+            x+=1;
+          },1000)
         }
       }
     },
@@ -44,11 +46,33 @@ $(document).ready(function(){
       }
     },
     series: [{
-            name: 'date/sec',
-            data: [[8,01],[9,24],[10,16]]
+            name: 'texting one',
+            data: (function(){
+              var data=[];
+              for (var i=100;i<125;i++){
+                data.push([i,(Math.random()*100+50)]);
+              }
+              return data
+            })()
+
         }, {
-            name: 'hours/min',
-            data: [[8,24],[9,27],[10,8]]
+            name: 'testing two',
+            data: (function(){
+              var data=[];
+              for (var i=100;i<125;i++){
+                data.push([i,(Math.random()*100+50)]);
+              }
+              return data;
+            })()
+        },{
+          name:'testing three',
+          data:(function () {
+            var data=[];
+            for (var i=100;i<125;i++){
+              data.push([i,(Math.random()*100+50)]);
+            }
+            return data
+          })()
         }],
 
     credits:{
@@ -72,18 +96,6 @@ $(document).ready(function(){
 
   // get data from SQL
   $.post('/sqltime',function(data){
-    var dates={
-      "date":[],
-      "hours":[],
-      "mins":[],
-      "secs":[]
-    };
-    for(var i=1;i<11;i++){
-      dates['date'].push(data[i]['date']);
-      dates['hours'].push(data[i]['hour']);
-      dates['mins'].push(data[i]['min']);
-      dates['secs'].push(data[i]['sec']);
-    }
     var chart = $('#container').highcharts();
     // chart.series[0].update({
 		//  		data:dates['date']
