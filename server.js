@@ -47,6 +47,7 @@ app.post('/sqltime',function(req,res){
 
 // creating fake data
 // setInterval(createData,1000);
+// needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
  function createData (){
   var timeNow = new Date();
   var timing = {'date':timeNow.getDate(),'hour':timeNow.getHours(),'min':timeNow.getMinutes(),'sec':timeNow.getSeconds()};
