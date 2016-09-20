@@ -48,12 +48,36 @@ app.post('/sqltime',function(req,res){
 // creating fake data
 // setInterval(createData,1000);
 // needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
- function createData (){
-  var timeNow = new Date();
-  var timing = {'date':timeNow.getDate(),'hour':timeNow.getHours(),'min':timeNow.getMinutes(),'sec':timeNow.getSeconds()};
-  connection.query('insert into time SET ? ',timing,function(err,rows){
+ function dataOne (){
+  var timeNow = new Date().getTime();
+  var timing = {'timestamp':timeNow,'data':Math.random()*1000};
+  connection.query('insert into serverOne SET ? ',timing,function(err,rows){
     if(err){
       console.log(err)
     }
   });
 };
+ function dataTwo (){
+  var timeNow = new Date().getTime();
+  var timing = {'timestamp':timeNow,'data':Math.random()*1000};
+  connection.query('insert into serverTwo SET ? ',timing,function(err,rows){
+    if(err){
+      console.log(err)
+    }
+  });
+};
+ function dataThree (){
+  var timeNow = new Date().getTime();
+  var timing = {'timestamp':timeNow,'data':Math.random()*1000};
+  connection.query('insert into serverThree SET ? ',timing,function(err,rows){
+    if(err){
+      console.log(err)
+    }
+  });
+};
+setInterval(function(){
+  dataOne();
+  dataTwo();
+  dataThree();
+},36000)
+
