@@ -50,24 +50,33 @@ app.post('/sqltime',function(req,res){
 // needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
  function dataOne (){
   var timeNow = new Date().getTime();
-  var timing = {'timestamp':timeNow,'data':Math.random()*1000};
-  connection.query('insert into serverOne SET ? ',timing,function(err,rows){
+  var y = Math.random()*1000;
+  console.log ('one',timeNow)
+  // var timing = {'timestamp':timeNow,'data':Math.random()*1000};
+  // connection.query('insert into serverOne SET ? ',timing,function(err,rows){
+  //   if(err){
+  //     console.log(err)
+  //   }
+  // });
+  connection.query('insert into serverOne ("timestamp","data") VALUES (FROM_UNIXTIME(timeNow,"%Y-%D-%M %h:%i:%s"),y)',function(err,rows){
     if(err){
       console.log(err)
     }
   });
 };
- function dataTwo (){
-  var timeNow = new Date().getTime();
-  var timing = {'timestamp':timeNow,'data':Math.random()*1000};
-  connection.query('insert into serverTwo SET ? ',timing,function(err,rows){
-    if(err){
-      console.log(err)
-    }
-  });
-};
+//  function dataTwo (){
+//   var timeNow = new Date().getTime();
+//   console.log ('two',timeNow)
+//   var timing = {'timestamp':FROM_UNIXTIME(timeNow,'%Y-%D-%M %h:%i:%s'),'data':Math.random()*1000};
+//   connection.query('insert into serverTwo SET ? ',timing,function(err,rows){
+//     if(err){
+//       console.log(err)
+//     }
+//   });
+// };
  function dataThree (){
   var timeNow = new Date().getTime();
+  console.log ('three',timeNow)
   var timing = {'timestamp':timeNow,'data':Math.random()*1000};
   connection.query('insert into serverThree SET ? ',timing,function(err,rows){
     if(err){
@@ -77,7 +86,9 @@ app.post('/sqltime',function(req,res){
 };
 setInterval(function(){
   dataOne();
-  dataTwo();
+  
   dataThree();
+   // var timeNow = new Date().getTime();
+   // console.log (timeNow)
 },36000)
 
