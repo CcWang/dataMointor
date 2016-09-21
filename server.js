@@ -58,7 +58,8 @@ app.post('/sqltime',function(req,res){
   //     console.log(err)
   //   }
   // });
-  connection.query('insert into serverOne ("timestamp","data") VALUES (FROM_UNIXTIME(timeNow,"%Y-%D-%M %h:%i:%s"),y)',function(err,rows){
+  var query = "insert into serverOne (timestamp,data) VALUES (FROM_UNIXTIME(timeNow,'%Y-%D-%M %h:%i:%s'),y)";
+  connection.query(query,function(err,rows){
     if(err){
       console.log(err)
     }
