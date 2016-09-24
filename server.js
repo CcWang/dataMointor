@@ -51,30 +51,28 @@ app.post('/sqltime',function(req,res){
  function dataOne (){
   var timeNow = Math.floor((new Date())/1000);
   var y = Math.random()*1000;
-  console.log ('one',timeNow)
-  // var timing = {'timestamp':timeNow,'data':Math.random()*1000};
-  // connection.query('insert into serverOne SET ? ',timing,function(err,rows){
-  //   if(err){
-  //     console.log(err)
-  //   }
-  // });
-  var query = "insert into serverOne (timestamp,data) VALUES (FROM_UNIXTIME("+timeNow+"),"+y+")";
-  connection.query(query,function(err,rows){
+  console.log ('time Now',timeNow)
+
+  var queryOne = "insert into serverOne (timestamp,data) VALUES (FROM_UNIXTIME("+timeNow+"),"+Math.random()*1000+")";
+  var queryTwo = "insert into serverTwo (timestamp,data) VALUES (FROM_UNIXTIME("+timeNow+"),"+Math.random()*1000+")";
+  var queryThree = "insert into serverThree (timestamp,data) VALUES (FROM_UNIXTIME("+timeNow+"),"+Math.random()*1000+")";
+  connection.query(queryOne,function(err,rows){
+    if(err){
+      console.log(err)
+    }
+  });
+  connection.query(queryTwo,function(err,rows){
+    if(err){
+      console.log(err)
+    }
+  });
+  connection.query(queryThree,function(err,rows){
     if(err){
       console.log(err)
     }
   });
 };
-//  function dataTwo (){
-//   var timeNow = new Date().getTime();
-//   console.log ('two',timeNow)
-//   var timing = {'timestamp':FROM_UNIXTIME(timeNow,'%Y-%D-%M %h:%i:%s'),'data':Math.random()*1000};
-//   connection.query('insert into serverTwo SET ? ',timing,function(err,rows){
-//     if(err){
-//       console.log(err)
-//     }
-//   });
-// };
+
  function dataThree (){
   var timeNow = new Date().getTime();
   console.log ('three',timeNow)
@@ -88,7 +86,4 @@ app.post('/sqltime',function(req,res){
 setInterval(function(){
   dataOne();
 
-  // dataThree();
-   // var timeNow = new Date().getTime();
-   // console.log (timeNow)
 },3600)
