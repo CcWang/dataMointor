@@ -49,7 +49,7 @@ app.post('/sqltime',function(req,res){
 // setInterval(createData,1000);
 // needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
  function dataOne (){
-  var timeNow = new Date().getTime();
+  var timeNow = Math.floor((new Date())/1000);
   var y = Math.random()*1000;
   console.log ('one',timeNow)
   // var timing = {'timestamp':timeNow,'data':Math.random()*1000};
@@ -58,7 +58,7 @@ app.post('/sqltime',function(req,res){
   //     console.log(err)
   //   }
   // });
-  var query = "insert into serverOne (timestamp,data) VALUES (FROM_UNIXTIME(timeNow,'%Y-%D-%M %h:%i:%s'),y)";
+  var query = "insert into serverOne (timestamp,data) VALUES (FROM_UNIXTIME("+timeNow+"),"+y+")";
   connection.query(query,function(err,rows){
     if(err){
       console.log(err)
@@ -87,9 +87,8 @@ app.post('/sqltime',function(req,res){
 };
 setInterval(function(){
   dataOne();
-  
-  dataThree();
+
+  // dataThree();
    // var timeNow = new Date().getTime();
    // console.log (timeNow)
-},36000)
-
+},3600)
