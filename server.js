@@ -46,7 +46,11 @@ app.post('/dataOne',function(req,res){
       data['one'].push(rows[i]["data"]);
       data['two'].push(rows[i]['metadata']);
       data['three'].push(rows[i]['threedata']);
-      data['timestamp'].push(rows[i]["timeStamp"]);
+      var day = new Date(rows[i]['timeStamp']);
+      // console.log(day.getMintues());
+      var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
+      +":"+day.getMinutes()+':'+day.getSeconds();
+      data['timestamp'].push(dateFormat);
 
     }
     res.send(data);
