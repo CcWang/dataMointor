@@ -56,6 +56,7 @@ app.post('/dataOne',function(req,res){
     res.send(data);
   })
 })
+// check newly added data
 
 // creating fake data
 // setInterval(createData,1000);
