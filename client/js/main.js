@@ -8,8 +8,8 @@ function bindData(serName){
   $('#container').highcharts({
     chart:{
       type:'area',
-    //   events:{
-    //     load:function(){
+      events:{
+        load:function(){
     //       var chart=this;
     //       var s1=this.series[0];
     //       var s2=this.series[1];
@@ -24,8 +24,14 @@ function bindData(serName){
     //         chart.redraw();
     //         x+=1;
     //       },1000)
-    //     }
-    //   }
+          setInterval(function(){
+            $.post('./checkData',function(data){
+              console.lod(data);
+            })
+            
+          },3600)
+        }
+      }
     },
     title:{
       text:'time stack'

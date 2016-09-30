@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var path=require('path');
 var mysql = require('mysql');
+var lastId;
 // connect with mysql
 var connection=mysql.createConnection({
   host:'127.0.0.1',
@@ -34,7 +35,9 @@ connection.connect(function(err){
 // route and query
 
 app.post('/dataOne',function(req,res){
-  connection.query('select timeStamp,data,metadata,threedata from serverOne',function(err,rows){
+  connection.query('select * from serverOne',function(err,rows){
+    lastId=rows[rows.length-1]['id'];
+    console.log('dataOne',lastId)
     var data = {
       'one':[],
       'two':[],
@@ -57,7 +60,43 @@ app.post('/dataOne',function(req,res){
   })
 })
 // check newly added data
+app.post('/checkData',function(rep,res){
+  console.log('last id',lastId);
+  if(lastId !== undefined){
+    var checkData='select * from serverOne where id >' + "57";
+    console.log('query',checkData)
+    connection.query(checkData,function(err,rows){
+      if(err){
+        console.log('error query',err.stack);
+      }else if(rows !=='[]'){
+        lastId=rows[rows.length-1]['id'];
+        console.log('checkData',lastId)
+        var data = {
+          'one':[],
+          'two':[],
+          'three':[],
+          'timestamp':[]
+        };
+        for(var i=0;i<rows.length;i++){
+          // console.log(rows[i]["data"])
+          data['one'].push(rows[i]["data"]);
+          data['two'].push(rows[i]['metadata']);
+          data['three'].push(rows[i]['threedata']);
+          var day = new Date(rows[i]['timeStamp']);
+          // console.log(day.getMintues());
+          var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
+          +":"+day.getMinutes()+':'+day.getSeconds();
+          data['timestamp'].push(dateFormat);
 
+        }
+        res.send(data);
+      }
+    })
+    
+  }else{
+    return;
+  }
+})
 // creating fake data
 // setInterval(createData,1000);
 // needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
