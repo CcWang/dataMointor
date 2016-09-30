@@ -24,9 +24,22 @@ function bindData(serName){
     //         chart.redraw();
     //         x+=1;
     //       },1000)
+          var chart = this;
+          var s1=this.series[0];
+          var s2=this.series[1];
+          var s3=this.series[2];
           setInterval(function(){
             $.post('./checkData',function(data){
-              console.lod(data);
+              if(data){
+                for(var i=0;i<data['timestamp'].length;i++){
+                  console.log('inside for loop',data);
+                  s1.addPoint([data['timestamp'][i],data['one'][i]],false,true);
+                  s2.addPoint([data['timestamp'][i],data['two'][i]],false,true);
+                  s3.addPoint([data['timestamp'][i],data['three'][i]],false,true);
+                  chart.redraw();
+                }
+              }
+
             })
             
           },3600)
@@ -84,7 +97,6 @@ function bindData(serName){
   // get data from SQL
   $.post('/dataOne',function(data){
     var chart = $('#container').highcharts();
-    console.log(data['timestamp'])
     chart.series[0].update({
       data:data['one']
     });   

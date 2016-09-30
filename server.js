@@ -50,7 +50,6 @@ app.post('/dataOne',function(req,res){
       data['two'].push(rows[i]['metadata']);
       data['three'].push(rows[i]['threedata']);
       var day = new Date(rows[i]['timeStamp']);
-      // console.log(day.getMintues());
       var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
       +":"+day.getMinutes()+':'+day.getSeconds();
       data['timestamp'].push(dateFormat);
@@ -63,22 +62,22 @@ app.post('/dataOne',function(req,res){
 app.post('/checkData',function(rep,res){
   console.log('last id',lastId);
   if(lastId !== undefined){
-    var checkData='select * from serverOne where id >' + "57";
+    var checkData='select * from serverOne where id >' + '56';
     console.log('query',checkData)
     connection.query(checkData,function(err,rows){
       if(err){
         console.log('error query',err.stack);
-      }else if(rows !=='[]'){
-        lastId=rows[rows.length-1]['id'];
-        console.log('checkData',lastId)
-        var data = {
+      }else if(rows.length > 0){
+        // sending the data 
+
+        lastId = rows[rows.length-1]['id'];
+        var data={
           'one':[],
           'two':[],
           'three':[],
           'timestamp':[]
         };
         for(var i=0;i<rows.length;i++){
-          // console.log(rows[i]["data"])
           data['one'].push(rows[i]["data"]);
           data['two'].push(rows[i]['metadata']);
           data['three'].push(rows[i]['threedata']);
@@ -87,9 +86,11 @@ app.post('/checkData',function(rep,res){
           var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
           +":"+day.getMinutes()+':'+day.getSeconds();
           data['timestamp'].push(dateFormat);
-
         }
         res.send(data);
+      }else{
+        var msg = false;
+        res.send(msg)
       }
     })
     
