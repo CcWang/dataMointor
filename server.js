@@ -62,8 +62,7 @@ app.post('/dataOne',function(req,res){
 app.post('/checkData',function(rep,res){
   console.log('last id',lastId);
   if(lastId !== undefined){
-    var checkData='select * from serverOne where id >' + '56';
-    console.log('query',checkData)
+    var checkData='select * from serverOne where id >' + lastId;
     connection.query(checkData,function(err,rows){
       if(err){
         console.log('error query',err.stack);
@@ -115,7 +114,7 @@ app.post('/checkData',function(rep,res){
   });
 };  
 
-// setInterval(function(){
-//   dataOne();
+setInterval(function(){
+  dataOne();
 
-// },3600)
+},3600)
