@@ -44,19 +44,21 @@ app.post('/dataOne',function(req,res){
       'three':[],
       'timestamp':[]
     };
+    // console.log('rows',rows);
     for(var i=0;i<rows.length;i++){
       // console.log(rows[i]["data"])
       data['one'].push(rows[i]["data"]);
       data['two'].push(rows[i]['metadata']);
       data['three'].push(rows[i]['threedata']);
       var day = new Date(rows[i]['timeStamp']);
-      var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
+      // in javascript, month is from 0-11,not 1-12
+      var dateFormat = day.getFullYear() + '-'+ (day.getMonth()+1)+"-"+day.getDate()+' '+ day.getHours()
       +":"+day.getMinutes()+':'+day.getSeconds();
       data['timestamp'].push(dateFormat);
       // data['timestamp'].push(rows[i]['timeStamp']);
 
     }
-    console.log('dataOne',data);
+    // console.log('dataOne',data);
     res.send(data);
   })
 })
@@ -83,7 +85,7 @@ app.post('/checkData',function(rep,res){
           data['two'].push(rows[i]['metadata']);
           data['three'].push(rows[i]['threedata']);
           var day = new Date( rows[i]['timeStamp']);
-          var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
+          var dateFormat = day.getFullYear() + '-'+ (day.getMonth()+1)+"-"+day.getDate()+' '+ day.getHours()
           +":"+day.getMinutes()+':'+day.getSeconds();
           data['timestamp'].push(dateFormat);
           // data['timestamp'].push(rows[i]['timeStamp'])
