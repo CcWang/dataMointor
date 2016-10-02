@@ -80,7 +80,7 @@ function bindData(serName){
   // end of highcharts
 
   // get data from SQL
-  $.post('/dataOne',function(data){
+  $.post('/dataInit',function(data){
     var chart = $('#container').highcharts();
     chart.series[0].update({
       data:data['one']
