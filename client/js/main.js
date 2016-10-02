@@ -10,20 +10,6 @@ function bindData(serName){
       type:'area',
       events:{
         load:function(){
-    //       var chart=this;
-    //       var s1=this.series[0];
-    //       var s2=this.series[1];
-    //       var s3=this.series[2];
-    //       var x=125
-    //       console.log(s1,s2,s3);
-    //       setInterval(function(){
-    //         var y1=Math.random()*98+Math.random()*50;
-    //         s1.addPoint([x,y1],false,true);
-    //         s2.addPoint([x,y1],false,true);
-    //         s3.addPoint([x,y1],false,true);
-    //         chart.redraw();
-    //         x+=1;
-    //       },1000)
           var chart = this;
           var s1=this.series[0];
           var s2=this.series[1];
@@ -32,7 +18,6 @@ function bindData(serName){
             $.post('./checkData',function(data){
               if(data){
                 for(var i=0;i<data['timestamp'].length;i++){
-                  console.log('inside for loop',data);
                   s1.addPoint([data['timestamp'][i],data['one'][i]],false,true);
                   s2.addPoint([data['timestamp'][i],data['two'][i]],false,true);
                   s3.addPoint([data['timestamp'][i],data['three'][i]],false,true);

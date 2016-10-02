@@ -53,11 +53,14 @@ app.post('/dataOne',function(req,res){
       var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
       +":"+day.getMinutes()+':'+day.getSeconds();
       data['timestamp'].push(dateFormat);
+      // data['timestamp'].push(rows[i]['timeStamp']);
 
     }
+    console.log('dataOne',data);
     res.send(data);
   })
 })
+
 // check newly added data
 app.post('/checkData',function(rep,res){
   console.log('last id',lastId);
@@ -68,7 +71,6 @@ app.post('/checkData',function(rep,res){
         console.log('error query',err.stack);
       }else if(rows.length > 0){
         // sending the data 
-
         lastId = rows[rows.length-1]['id'];
         var data={
           'one':[],
@@ -80,12 +82,13 @@ app.post('/checkData',function(rep,res){
           data['one'].push(rows[i]["data"]);
           data['two'].push(rows[i]['metadata']);
           data['three'].push(rows[i]['threedata']);
-          var day = new Date(rows[i]['timeStamp']);
-          // console.log(day.getMintues());
+          var day = new Date( rows[i]['timeStamp']);
           var dateFormat = day.getFullYear() + '-'+ day.getMonth()+"-"+day.getDate()+' '+ day.getHours()
           +":"+day.getMinutes()+':'+day.getSeconds();
           data['timestamp'].push(dateFormat);
+          // data['timestamp'].push(rows[i]['timeStamp'])
         }
+        // console.log('checkData',data);
         res.send(data);
       }else{
         var msg = false;
@@ -101,17 +104,14 @@ app.post('/checkData',function(rep,res){
 // setInterval(createData,1000);
 // needed schema: x: timestamp, on xAxis need to be human readable, on yAxis, number less than 1000, metadata
  function dataOne (){
-  var timeNow = Math.floor((new Date())/1000);
-  var y = Math.random()*1000;
-  console.log ('time Now',timeNow)
-
-  var queryOne = "insert into serverOne (timestamp,data, metadata,threedata) VALUES (FROM_UNIXTIME("+timeNow+",'%Y-%m-%d %H:%M:%S'),"+Math.random()*1000+","+Math.random()*1000+","+Math.random()*1000+")";
-  
+  var timeNow = (new Date()).getTime()/1000;
+  var queryOne = "insert into serverOne (timestamp,data, metadata,threedata) VALUES (FROM_UNIXTIME("+timeNow+"),"+Math.random()*1000+","+Math.random()*1000+","+Math.random()*1000+")";
   connection.query(queryOne,function(err,rows){
     if(err){
       console.log(err)
     }
   });
+
 };  
 
 setInterval(function(){
