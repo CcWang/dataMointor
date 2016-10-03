@@ -45,7 +45,11 @@ function bindData(serName){
     },
     plotOptions:{
       area:{
-        stacking:'normal'
+        stacking:'normal',
+        marker:{
+          enable:false
+          
+        }
       }
     },
     series: [{
