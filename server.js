@@ -35,7 +35,7 @@ connection.connect(function(err){
 // route and query
 
 app.post('/dataInit',function(req,res){
-  connection.query('select * from serverOne order by id desc limit 30',function(err,rows){
+  connection.query('select * from serverOne',function(err,rows){
     lastId=rows[rows.length-1]['id'];
     console.log('dataOne',lastId)
     var data = {
